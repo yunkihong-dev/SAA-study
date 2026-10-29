@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171c23" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SAA-C03">
+<title>SAA-C03 학습</title>
+<style>
+:root{
+  --bg:#f6f7f9;--surface:#fff;--surface2:#f0f2f5;--text:#16191f;--muted:#5f6b7a;--line:#e1e4e8;
+  --brand:#ff9900;--brand-ink:#232f3e;--accent:#0b63ce;--ok:#1d8102;--ok-bg:#eaf6e6;--bad:#d13212;--bad-bg:#fdecea;
+  --hl:#fff3cd;--hl-ink:#7a4d00;--shadow:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1318;--surface:#171c23;--surface2:#1f262f;--text:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;
+  --brand-ink:#e6e9ee;--accent:#5ba3ff;--ok:#5cc24a;--ok-bg:#16301a;--bad:#ff6b5a;--bad-bg:#3a1a17;--hl:#3b3216;--hl-ink:#ffd27a;--shadow:none}}
+:root[data-theme="dark"]{
+  --bg:#0f1318;--surface:#171c23;--surface2:#1f262f;--text:#e6e9ee;--muted:#9aa5b4;--line:#2a323d;
+  --brand-ink:#e6e9ee;--accent:#5ba3ff;--ok:#5cc24a;--ok-bg:#16301a;--bad:#ff6b5a;--bad-bg:#3a1a17;--hl:#3b3216;--hl-ink:#ffd27a;--shadow:none}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Segoe UI",sans-serif;word-break:keep-all;overflow-wrap:anywhere}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+header{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:980px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:4px;height:56px}
+.logo{font-weight:800;margin-right:12px;white-space:nowrap;color:var(--brand-ink);text-decoration:none}
+.logo b{color:var(--brand)}
+nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1}
+nav a{padding:6px 12px;border-radius:8px;text-decoration:none;color:var(--muted);white-space:nowrap;font-weight:600;font-size:14px}
+nav a.on{background:var(--surface2);color:var(--text)}
+.iconbtn{border:0;background:none;padding:6px 8px;border-radius:8px;color:var(--muted)}
+main{max-width:980px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:24px;margin:0 0 4px}
+h2{font-size:18px;margin:28px 0 12px}
+.sub{color:var(--muted);margin:0 0 20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:720px){.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}}
+.stat .k{color:var(--muted);font-size:13px}.stat .v{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.btn{text-decoration:none;display:inline-block;border:1px solid var(--line);background:var(--surface);padding:9px 16px;border-radius:10px;font-weight:600}
+.btn:hover{background:var(--surface2)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#16191f}
+.btn.primary:hover{filter:brightness(.95)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);padding:5px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted)}
+.chip.on{background:var(--brand-ink);border-color:var(--brand-ink);color:var(--bg)}
+.chip .n{opacity:.6;font-weight:500;margin-left:4px}
+label.f{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:16px 0 8px}
+select,input[type=number],input[type=search]{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+input[type=search]{width:100%;font-size:16px;padding:12px 14px}
+.prog{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--brand)}
+/* question */
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;font-size:13px;color:var(--muted)}
+.qno{font-weight:800;color:var(--text);font-size:15px}
+.tag{background:var(--surface2);padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
+.tag.multi{background:var(--hl);color:var(--hl-ink)}
+.stem p{margin:0 0 10px}
+.stem mark{background:var(--hl);color:var(--hl-ink);padding:0 2px;border-radius:3px;font-weight:700}
+.stem img{max-width:100%;border:1px solid var(--line);border-radius:8px;background:#fff;margin:6px 0}
+.opts{display:grid;gap:8px;margin-top:16px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;width:100%}
+.opt:hover:not(:disabled){border-color:var(--muted)}
+.opt .L{flex:none;width:26px;height:26px;border-radius:7px;background:var(--surface2);display:grid;place-items:center;font-weight:800;font-size:13px}
+.opt.sel{border-color:var(--accent)}.opt.sel .L{background:var(--accent);color:#fff}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}.opt.ok .L{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}.opt.bad .L{background:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+.verdict{margin-top:16px;padding:12px 16px;border-radius:12px;font-weight:700}
+.verdict.ok{background:var(--ok-bg);color:var(--ok)}.verdict.bad{background:var(--bad-bg);color:var(--bad)}
+.ex{margin-top:14px;border-top:1px dashed var(--line);padding-top:14px}
+.ex h4{margin:0 0 6px;font-size:13px;color:var(--muted)}
+.ex p{margin:0 0 8px;font-size:14px}
+.ex .blk{margin-bottom:12px}
+.navrow{display:flex;gap:8px;margin-top:16px;align-items:center;flex-wrap:wrap}
+.kbd{font-size:12px;color:var(--muted)}
+.kbd kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;font-family:inherit;background:var(--surface)}
+.star{border:0;background:none;font-size:20px;line-height:1;padding:2px 4px;color:var(--muted)}
+.star.on{color:var(--brand)}
+.list .item{display:flex;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start}
+.list .item:hover{background:var(--surface2)}
+.list .item .no{flex:none;width:56px;font-weight:800;font-variant-numeric:tabular-nums}
+.list .item .tx{flex:1;font-size:14px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.pal button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 0;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.pal button.ans{background:var(--surface2)}
+.pal button.flag{box-shadow:inset 0 -3px 0 var(--brand)}
+.pal button.cur{outline:2px solid var(--accent)}
+.pal button.ok{background:var(--ok-bg);color:var(--ok);border-color:var(--ok)}
+.pal button.bad{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:18px}
+.bars .r{display:grid;grid-template-columns:110px 1fr 70px;gap:10px;align-items:center;font-size:13px;margin:6px 0}
+.bars .r .t{height:10px;background:var(--surface2);border-radius:99px;overflow:hidden;display:flex}
+.bars .r .t i{display:block;height:100%}
+.tips dl{margin:0}.tips dt{font-weight:800;margin-top:14px}.tips dd{margin:4px 0 0;color:var(--muted);font-size:14px}
+.tips dd b{color:var(--text)}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+.score{font-size:48px;font-weight:900;font-variant-numeric:tabular-nums}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--brand-ink);color:var(--bg);padding:10px 18px;border-radius:10px;font-weight:600;opacity:0;transition:.2s;pointer-events:none}
+.toast.on{opacity:1}
+/* ---------- 모바일 ---------- */
+html{-webkit-text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent}
+.tabbar{display:none}
+.hint{}
+@media (hover:none){.btn:hover{background:var(--surface)}.btn.primary:hover{filter:none}.opt:hover:not(:disabled){border-color:var(--line)}.opt.sel:hover{border-color:var(--accent)}.list .item:hover{background:none}}
+.btn:active,.opt:active:not(:disabled),.chip:active{transform:scale(.98)}
+@media (max-width:720px){
+  body{font-size:15.5px}
+  .bar{height:52px;padding:0 16px;padding-top:env(safe-area-inset-top)}
+  header{padding-top:0}
+  header nav{display:none}
+  .logo{flex:1}
+  .iconbtn{font-size:20px;padding:8px 10px}
+  main{padding:16px 16px calc(84px + env(safe-area-inset-bottom))}
+  h1{font-size:22px}h2{font-size:17px;margin:24px 0 10px}
+  .sub{font-size:14px;margin-bottom:16px}
+  .card{padding:16px;border-radius:14px}
+  .stat .v{font-size:24px}
+  .row>.btn{flex:1 1 auto;text-align:center}
+  .btn{padding:11px 16px;min-height:44px}
+  .chip{padding:7px 12px;font-size:13.5px}
+  select,input[type=number],input[type=search]{font-size:16px}
+  .hint{display:none!important}
+  .opt{padding:13px 12px;gap:10px;font-size:15px;line-height:1.6}
+  .opt .L{width:28px;height:28px}
+  .stem p{font-size:16px;line-height:1.75}
+  .qhead{gap:6px}
+  .star{font-size:24px;padding:4px 6px}
+  .list .item .no{width:48px}
+  .pal{grid-template-columns:repeat(auto-fill,minmax(44px,1fr))}
+  .pal button{padding:9px 0}
+  .toast{bottom:calc(92px + env(safe-area-inset-bottom));max-width:calc(100% - 32px);text-align:center}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.8) blur(16px);-webkit-backdrop-filter:saturate(1.8) blur(16px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:600;color:var(--muted);text-decoration:none;padding:4px 0}
+  .tabbar svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar a.on{color:var(--brand);background:none}
+  .bars .r{grid-template-columns:1fr auto;gap:4px 8px;margin:10px 0}
+  .bars .r .t{grid-column:1/-1;order:3}
+  .navrow>.gpt{flex:1}
+  /* 문제 풀이 중: 탭바 대신 하단 고정 액션바 */
+  body.session .tabbar{display:none}
+  .actbar{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0!important;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+  .actbar .btn{flex:1;min-height:48px}
+  .actbar .spacer{display:none}
+  body.session main{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  .sessbar{position:sticky;top:52px;z-index:5;background:var(--bg);margin:-16px -16px 12px!important;padding:10px 16px 8px}
+}
+/* 테마 전환 애니메이션 */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.6s;animation-timing-function:ease}
+html.theming,html.theming *,html.theming *::before,html.theming *::after{transition:background-color .6s ease,color .6s ease,border-color .6s ease,box-shadow .6s ease,fill .6s ease!important}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}html.theming *{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <a class="logo" href="#/">SAA<b>-C03</b></a>
+  <nav id="nav">
+    <a href="#/">대시보드</a><a href="#/practice">문제풀이</a><a href="#/exam">모의고사</a><a href="#/notes">오답·북마크</a><a href="#/search">검색</a><a href="#/tips">핵심요약</a>
+  </nav>
+  <button class="iconbtn" id="themeBtn" title="테마 전환" aria-label="테마 전환">◐</button>
+</div></header>
+<nav class="tabbar" id="tabbar" aria-label="하단 메뉴">
+  <a href="#/"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>홈</a>
+  <a href="#/practice"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 12l3 3 5-6"/></svg>풀이</a>
+  <a href="#/exam"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>모의고사</a>
+  <a href="#/notes"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>오답</a>
+  <a href="#/search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>검색</a>
+  <a href="#/tips"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>요약</a>
+</nav>
+<main id="app"></main>
+<div class="toast" id="toast"></div>
+<script src="data.js"></script>
+<script>
+"use strict";
+const Q = window.QUESTIONS || [];
+const byId = new Map(Q.map(q => [q.id, q]));
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const linkify = s => esc(s).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+
+/* ---------- 카테고리 자동 분류 ---------- */
+const CATS = [
+  ["스토리지", /S3|EBS|EFS|FSx|Storage Gateway|Snowball|Snow(cone|mobile)|Glacier|AWS Backup/],
+  ["컴퓨팅", /EC2|Lambda|ECS|EKS|Fargate|Auto ?Scaling|Elastic Beanstalk|AWS Batch|Outposts|Lightsail/],
+  ["데이터베이스", /RDS|Aurora|DynamoDB|ElastiCache|Redshift|DocumentDB|Neptune|Keyspaces|MemoryDB/],
+  ["네트워킹", /VPC|CloudFront|Route 53|로드 ?밸런서|Load Balancer|ALB|NLB|Global Accelerator|Direct Connect|VPN|Transit Gateway|PrivateLink|NAT|서브넷|보안 그룹/],
+  ["보안·자격증명", /IAM|KMS|Secrets Manager|WAF|Shield|GuardDuty|Cognito|Macie|Organizations|SCP|Inspector|Certificate Manager|ACM|Security Hub|Directory Service|IAM Identity Center|SSO|CloudHSM/],
+  ["통합·메시징", /SQS|SNS|Kinesis|EventBridge|Step Functions|API Gateway|Amazon MQ|AppSync|MSK/],
+  ["분석", /Athena|Glue|EMR|QuickSight|Lake Formation|OpenSearch|Elasticsearch|Data Pipeline/],
+  ["마이그레이션·전송", /DMS|Database Migration|DataSync|Transfer Family|Application Migration|Migration Hub|SCT|Snowball/],
+  ["모니터링·관리", /CloudWatch|CloudTrail|AWS Config|Systems Manager|Trusted Advisor|CloudFormation|Compute Optimizer|Cost Explorer|Budgets/],
+];
+const FOCUS = [
+  ["운영 오버헤드↓", /운영 (오버헤드|복잡성|노력)|관리 오버헤드|운영상 가장 효율/],
+  ["비용 최적화", /비용 효율|비용을 (최소|절감|줄)|저렴|가장 경제/],
+  ["고가용성·복원력", /고가용성|가용성이 높|내결함성|재해 복구|복원력|다중 AZ|장애 조치/],
+  ["성능·확장성", /성능|지연 시간|확장성|처리량|확장/],
+  ["보안·규정준수", /보안|암호화|규정 준수|규정을 준수|권한|최소 권한|감사/],
+];
+for (const q of Q) {
+  const correct = q.opts.filter(o => q.ans.includes(o[0])).map(o => o[1]).join(" ");
+  const core = q.q.join(" ") + " " + correct;
+  q.cats = CATS.filter(([, re]) => re.test(core)).map(c => c[0]);
+  q.focus = FOCUS.filter(([, re]) => re.test(q.q.join(" "))).map(c => c[0]);
+}
+const HL = /(최소한의 운영 오버헤드|운영 오버헤드|운영상 가장 효율적|가장 비용 효율적|비용 효율적|비용을 최소화|최소한의 비용|고가용성|가용성이 높|내결함성|최소한의 지연 시간|지연 시간|최소한의 변경|코드 변경|가장 안전|최소 권한|실시간|거의 실시간|서버리스|온프레미스|(?:두|세) 가지를 선택|조합을 선택|(?:2|3|두|세)개(?:를)? 선택|RPO|RTO|\d+\s?(?:밀리초|초|분|시간|일|년|개월|TB|GB|PB|MB))/g;
+
+/* ---------- 저장 ---------- */
+const KEY = "saa-c03-study-v1";
+let S = { att: {}, bm: [], exams: [], last: 1 };
+try { S = Object.assign(S, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const isBm = id => S.bm.includes(id);
+const toggleBm = id => { S.bm = isBm(id) ? S.bm.filter(x => x !== id) : [...S.bm, id]; save(); };
+function record(id, ok) {
+  const a = S.att[id] || { n: 0, c: 0, w: 0 };
+  a.n++; ok ? a.c++ : a.w++; a.l = ok ? 1 : 0; a.t = Date.now();
+  S.att[id] = a; S.last = id; save();
+}
+const status = id => { const a = S.att[id]; return !a ? "new" : a.l ? "ok" : "bad"; };
+
+/* ---------- GPT 질문용 프롬프트 ---------- */
+function gptPrompt(q, mine) {
+  const lines = [
+    "AWS Solutions Architect Associate(SAA-C03) 시험 문제를 공부하고 있어. 아래 문제를 해설해줘.",
+    "",
+    `[문제 Q${q.id}]${q.ans.length > 1 ? ` (${q.ans.length}개 선택)` : ""}`,
+    ...q.q,
+  ];
+  if (q.img) lines.push("(※ 원문에 정책 JSON/다이어그램 이미지가 포함된 문제입니다)");
+  lines.push("", "[보기]", ...q.opts.map(o => `${o[0]}. ${o[1]}`), "", `[덤프 정답] ${q.ans.join(", ")}`);
+  if (mine && mine.length) {
+    const ok = mine.slice().sort().join() === q.ans.slice().sort().join();
+    lines.push(`[내가 고른 답] ${mine.join(", ")} (${ok ? "정답" : "오답"})`);
+  }
+  if (q.ex.length) lines.push("", "[덤프 해설]", ...q.ex.map(b => b.join(" ")));
+  lines.push("", "[요청]",
+    "1. 문제에서 핵심 요구 조건(키워드)을 짚어줘.",
+    "2. 정답이 왜 맞는지, 나머지 보기는 각각 왜 틀렸는지 설명해줘.",
+    mine && mine.length && mine.slice().sort().join() !== q.ans.slice().sort().join() ? `3. 내가 고른 ${mine.join(", ")}이(가) 왜 틀렸는지, 어떤 착각을 했을 가능성이 높은지 알려줘.` : "3. 비슷한 문제에서 헷갈리기 쉬운 함정을 알려줘.",
+    "4. 덤프 정답이 틀렸을 가능성이 있다면 그것도 지적해줘.",
+    "5. 이 유형을 기억할 수 있는 한 줄 요약을 줘.");
+  return lines.join("\n");
+}
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; } catch (e) {
+    const ta = document.createElement("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand("copy"); } catch (_) {} ta.remove(); return ok;
+  }
+}
+function gptBtnHTML(q, mine) { return `<button class="btn gpt" data-gpt="${q.id}" data-mine="${(mine || []).join("")}">📋 GPT 질문 프롬프트 복사</button>`; }
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-gpt]"); if (!b) return;
+  const q = byId.get(+b.dataset.gpt);
+  const ok = await copyText(gptPrompt(q, b.dataset.mine ? b.dataset.mine.split("") : null));
+  toast(ok ? "복사 완료 · ChatGPT에 붙여넣으세요" : "복사 실패 — 브라우저 권한을 확인하세요");
+  if (ok) { b.textContent = "✓ 복사됨"; setTimeout(() => b.textContent = "📋 GPT 질문 프롬프트 복사", 1500); }
+});
+
+let toastT;
+function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("on"), 1600); }
+
+/* ---------- 테마 ---------- */
+const themeKey = "saa-theme";
+function applyTheme(t) {
+  if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
+  // 아이폰 상단 상태바 색도 테마에 맞춤
+  const c = getComputedStyle(document.documentElement).getPropertyValue("--surface").trim();
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => { if (t) { m.content = c; m.removeAttribute("media"); } });
+}
+try { applyTheme(localStorage.getItem(themeKey)); } catch (e) {}
+$("#themeBtn").onclick = () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  const t = dark ? "light" : "dark"; try { localStorage.setItem(themeKey, t); } catch (e) {}
+  if (document.startViewTransition) { document.startViewTransition(() => applyTheme(t)); return; }
+  // View Transitions 미지원 브라우저: 색 속성 transition으로 대체
+  const root = document.documentElement; root.classList.add("theming"); applyTheme(t);
+  clearTimeout(root._tt); root._tt = setTimeout(() => root.classList.remove("theming"), 650);
+};
+
+/* ---------- 문제 렌더 공통 ---------- */
+function stemHTML(q) {
+  let h = q.q.map(p => `<p>${esc(p).replace(HL, "<mark>$1</mark>")}</p>`).join("");
+  if (q.img) h += q.img.map(s => `<img src="${s}" alt="문제 ${q.id} 이미지" loading="lazy">`).join("");
+  return h;
+}
+function exHTML(q) {
+  if (!q.ex.length) return `<div class="ex"><p class="kbd">이 문항은 PDF에 해설이 없습니다.</p></div>`;
+  return `<div class="ex">${q.ex.map((b, i) => `<div class="blk"><h4>해설${q.ex.length > 1 ? " " + (i + 1) : ""}</h4>${b.map(p => `<p>${linkify(p)}</p>`).join("")}</div>`).join("")}</div>`;
+}
+function headHTML(q, extra = "") {
+  const multi = q.ans.length > 1 ? `<span class="tag multi">${q.ans.length}개 선택</span>` : "";
+  const a = S.att[q.id];
+  const hist = a ? `<span>시도 ${a.n} · 정답 ${a.c}</span>` : "";
+  return `<div class="qhead"><span class="qno">Q${q.id}</span>${multi}${q.cats.map(c => `<span class="tag">${c}</span>`).join("")}<span class="spacer"></span>${hist}${extra}
+    <button class="star ${isBm(q.id) ? "on" : ""}" data-bm="${q.id}" title="북마크 (B)" aria-label="북마크">★</button></div>`;
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-bm]"); if (!b) return;
+  const id = +b.dataset.bm; toggleBm(id); b.classList.toggle("on", isBm(id)); toast(isBm(id) ? "북마크에 추가" : "북마크 해제");
+});
+
+/* ---------- 스와이프 (모바일: 왼쪽으로 밀면 다음, 오른쪽이면 이전) ---------- */
+function onSwipe(onLeft, onRight) {
+  let x0 = 0, y0 = 0, t0 = 0, ok = false;
+  const st = e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; t0 = Date.now(); ok = !e.target.closest("input,textarea,.pal,img"); };
+  const en = e => {
+    if (!ok) return; const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    if (Date.now() - t0 < 600 && Math.abs(dx) > 70 && Math.abs(dy) < Math.abs(dx) * 0.5) (dx < 0 ? onLeft : onRight)();
+  };
+  const m = $("#app"); m.addEventListener("touchstart", st, { passive: true }); m.addEventListener("touchend", en, { passive: true });
+  return () => { m.removeEventListener("touchstart", st); m.removeEventListener("touchend", en); };
+}
+
+/* ---------- 라우터 ---------- */
+let cleanup = null;
+function route() {
+  if (cleanup) { cleanup(); cleanup = null; }
+  const [path, arg] = location.hash.replace(/^#\/?/, "").split("/");
+  document.querySelectorAll("#nav a, #tabbar a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#/" + (path === "q" ? "notes" : path || "")));
+  const views = { "": home, practice, exam, notes, search, tips, q: single };
+  (views[path] || home)(arg);
+  window.scrollTo(0, 0);
+}
+addEventListener("hashchange", route);
+
+/* ---------- 대시보드 ---------- */
+function home() {
+  const ids = Object.keys(S.att).map(Number);
+  const solved = ids.length, ok = ids.filter(i => S.att[i].l).length, wrong = solved - ok;
+  const catRows = CATS.map(([name]) => {
+    const qs = Q.filter(q => q.cats.includes(name));
+    const s = qs.filter(q => S.att[q.id]), c = s.filter(q => S.att[q.id].l);
+    return { name, total: qs.length, s: s.length, c: c.length };
+  });
+  const lastExam = S.exams[S.exams.length - 1];
+  $("#app").innerHTML = `
+    <h1>AWS SAA-C03 학습</h1>
+    <p class="sub">Examtopics + V18.35 한국어 덤프 ${Q.length}문항 · 진도는 이 브라우저에 자동 저장됩니다</p>
+    <div class="grid g4">
+      <div class="card stat"><div class="k">푼 문제</div><div class="v">${solved}<small style="font-size:14px;color:var(--muted)"> / ${Q.length}</small></div><div class="prog"><i style="width:${pct(solved, Q.length)}%"></i></div></div>
+      <div class="card stat"><div class="k">최근 정답률</div><div class="v">${pct(ok, solved)}%</div><div class="kbd">각 문항 마지막 시도 기준</div></div>
+      <div class="card stat"><div class="k">오답노트</div><div class="v" style="color:var(--bad)">${wrong}</div><div class="kbd">다시 맞히면 빠집니다</div></div>
+      <div class="card stat"><div class="k">최근 모의고사</div><div class="v">${lastExam ? lastExam.score + "%" : "–"}</div><div class="kbd">${lastExam ? `${lastExam.correct}/${lastExam.total} · ${lastExam.score >= 72 ? "합격선 통과" : "합격선 72% 미달"}` : "아직 응시 기록 없음"}</div></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <a class="btn primary" href="#/practice" id="contBtn">이어서 풀기 (Q${nextUnsolved()})</a>
+      <a class="btn" href="#/exam">65문항 모의고사</a>
+      ${wrong ? `<button class="btn" id="wrongGo">오답만 다시 풀기</button>` : ""}
+    </div>
+    <h2>영역별 진도</h2>
+    <div class="card bars">
+      ${catRows.map(r => `<div class="r"><span><b>${r.name}</b></span>
+        <span class="t" title="정답 ${r.c} · 오답 ${r.s - r.c} · 안 푼 문제 ${r.total - r.s}"><i style="width:${r.c / r.total * 100}%;background:var(--ok)"></i><i style="width:${(r.s - r.c) / r.total * 100}%;background:var(--bad)"></i></span>
+        <span class="kbd">${r.s}/${r.total} · ${pct(r.c, r.s)}%</span></div>`).join("")}
+      <p class="kbd" style="margin:10px 0 0"><span class="dot" style="background:var(--ok)"></span>정답 <span class="dot" style="background:var(--bad);margin-left:8px"></span>오답 · 한 문제가 여러 영역에 속할 수 있어요</p>
+    </div>
+    ${S.exams.length ? `<h2>모의고사 기록</h2><div class="card list">${S.exams.slice().reverse().slice(0, 10).map(e => `<div class="item" style="cursor:default"><span class="no">${e.score}%</span><span class="tx">${new Date(e.date).toLocaleString("ko-KR")} · ${e.correct}/${e.total} · ${Math.round(e.sec / 60)}분 소요</span></div>`).join("")}</div>` : ""}
+    <h2>데이터 관리</h2>
+    <div class="row"><button class="btn" id="exportBtn">진도 내보내기</button><label class="btn">진도 불러오기<input type="file" accept=".json" id="importIn" hidden></label><button class="btn" id="resetBtn" style="color:var(--bad)">진도 초기화</button></div>`;
+  $("#contBtn").onclick = e => { e.preventDefault(); startPractice({ ids: Q.map(q => q.id), start: nextUnsolved() }); };
+  if ($("#wrongGo")) $("#wrongGo").onclick = () => startPractice({ ids: shuffle(Q.filter(q => status(q.id) === "bad").map(q => q.id)) });
+  $("#exportBtn").onclick = () => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(S)], { type: "application/json" }));
+    a.download = `saa-progress-${new Date().toISOString().slice(0, 10)}.json`; a.click();
+  };
+  $("#importIn").onchange = async e => {
+    try { S = Object.assign({ att: {}, bm: [], exams: [] }, JSON.parse(await e.target.files[0].text())); save(); toast("불러왔습니다"); home(); } catch (_) { toast("파일을 읽지 못했습니다"); }
+  };
+  $("#resetBtn").onclick = () => { if (confirm("모든 풀이 기록·북마크·모의고사 기록을 지울까요?")) { S = { att: {}, bm: [], exams: [], last: 1 }; save(); home(); } };
+}
+function nextUnsolved() { const q = Q.find(q => !S.att[q.id] && q.id >= (S.last || 1)) || Q.find(q => !S.att[q.id]); return q ? q.id : 1; }
+
+/* ---------- 문제풀이 설정 ---------- */
+let P = { cat: "전체", focus: "전체", st: "all", order: "seq", from: 1, to: Q.length, instant: false };
+function practice() {
+  const pool = () => Q.filter(q =>
+    q.id >= P.from && q.id <= P.to &&
+    (P.cat === "전체" || q.cats.includes(P.cat)) &&
+    (P.focus === "전체" || q.focus.includes(P.focus)) &&
+    (P.st === "all" || (P.st === "bm" ? isBm(q.id) : P.st === "multi" ? q.ans.length > 1 : status(q.id) === P.st)));
+  const chips = (key, list, count) => list.map(v => `<button class="chip ${P[key] === v[0] ? "on" : ""}" data-k="${key}" data-v="${v[0]}">${v[1]}${count ? `<span class="n">${count(v[0])}</span>` : ""}</button>`).join("");
+  const draw = () => {
+    const n = pool().length;
+    $("#app").innerHTML = `
+      <h1>문제풀이</h1><p class="sub">조건을 고르고 시작하세요. 풀 때마다 결과가 저장됩니다.</p>
+      <div class="card">
+        <label class="f" style="margin-top:0">영역</label>
+        <div class="chips">${chips("cat", [["전체", "전체"], ...CATS.map(c => [c[0], c[0]])], v => v === "전체" ? Q.length : Q.filter(q => q.cats.includes(v)).length)}</div>
+        <label class="f">출제 포인트 (문제에서 요구하는 조건)</label>
+        <div class="chips">${chips("focus", [["전체", "전체"], ...FOCUS.map(c => [c[0], c[0]])], v => v === "전체" ? Q.length : Q.filter(q => q.focus.includes(v)).length)}</div>
+        <label class="f">상태</label>
+        <div class="chips">${chips("st", [["all", "전체"], ["new", "안 푼 문제"], ["bad", "오답"], ["ok", "맞힌 문제"], ["bm", "북마크"], ["multi", "복수정답"]])}</div>
+        <label class="f">범위 · 순서</label>
+        <div class="row">
+          Q<input type="number" id="from" min="1" max="${Q.length}" value="${P.from}" style="width:84px"> ~ Q<input type="number" id="to" min="1" max="${Q.length}" value="${P.to}" style="width:84px">
+          <span class="spacer"></span>
+          <div class="chips">${chips("order", [["seq", "순서대로"], ["rand", "무작위"]])}</div>
+        </div>
+        <label class="f">모드</label>
+        <div class="chips">${chips("instant", [[false, "풀이 모드"], [true, "암기 모드 (정답·해설 바로 보기)"]])}</div>
+        <div class="row" style="margin-top:20px"><span class="kbd">조건에 맞는 문제 <b style="color:var(--text);font-size:16px">${n}</b>개</span><span class="spacer"></span>
+          <button class="btn primary" id="go" ${n ? "" : "disabled"}>시작하기</button></div>
+      </div>`;
+    document.querySelectorAll(".chip[data-k]").forEach(b => b.onclick = () => { const k = b.dataset.k; P[k] = k === "instant" ? b.dataset.v === "true" : b.dataset.v; draw(); });
+    $("#from").onchange = e => { P.from = Math.max(1, Math.min(Q.length, +e.target.value || 1)); draw(); };
+    $("#to").onchange = e => { P.to = Math.max(1, Math.min(Q.length, +e.target.value || Q.length)); draw(); };
+    $("#go").onclick = () => { const ids = pool().map(q => q.id); startPractice({ ids: P.order === "rand" ? shuffle(ids) : ids, instant: P.instant }); };
+  };
+  draw();
+}
+
+/* ---------- 문제풀이 세션 ---------- */
+function startPractice({ ids, start, instant = false }) {
+  if (!ids.length) { toast("문제가 없습니다"); return; }
+  if (cleanup) { cleanup(); cleanup = null; }
+  history.replaceState(null, "", "#/practice");
+  document.querySelectorAll("#nav a, #tabbar a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#/practice"));
+  let i = start ? Math.max(0, ids.indexOf(start)) : 0;
+  let sel = [], done = false, sessOk = 0, sessN = 0;
+  const draw = () => {
+    const q = byId.get(ids[i]);
+    sel = []; done = instant;
+    $("#app").innerHTML = `
+      <div class="sessbar" style="margin-bottom:16px"><div class="row" style="margin-bottom:10px;flex-wrap:nowrap"><a class="btn" href="#/practice" style="flex:none;min-height:36px;padding:6px 12px">← 설정</a><span class="spacer"></span>
+        <span class="kbd">${i + 1} / ${ids.length}${sessN ? ` · 이번 세션 ${sessOk}/${sessN}` : ""}</span></div>
+      <div class="prog"><i style="width:${(i + 1) / ids.length * 100}%"></i></div></div>
+      <div class="card">
+        ${headHTML(q)}
+        <div class="stem">${stemHTML(q)}</div>
+        <div class="opts">${q.opts.map(o => `<button class="opt" data-o="${o[0]}"><span class="L">${o[0]}</span><span>${esc(o[1])}</span></button>`).join("")}</div>
+        <div id="res"></div>
+        <div class="navrow actbar">
+          <button class="btn" id="prev" ${i ? "" : "disabled"}>← 이전</button>
+          ${q.ans.length > 1 && !instant ? `<button class="btn primary" id="check" disabled>확인 0/${q.ans.length}</button>` : ""}
+          <button class="btn ${q.ans.length > 1 && !instant ? "" : "primary"}" id="next">${i + 1 < ids.length ? "다음 →" : "마치기"}</button>
+          <span class="spacer"></span>
+          <span class="kbd hint"><kbd>A</kbd>~<kbd>F</kbd> 선택 · <kbd>Enter</kbd> 확인/다음 · <kbd>←</kbd><kbd>→</kbd> 이동 · <kbd>B</kbd> 북마크</span>
+        </div>
+      </div>`;
+    document.querySelectorAll(".opt").forEach(b => b.onclick = () => pick(b.dataset.o));
+    $("#prev").onclick = () => { if (i) { i--; draw(); scrollTo(0, 0); } };
+    $("#next").onclick = next;
+    if ($("#check")) $("#check").onclick = grade;
+    if (instant) reveal(q, null);
+  };
+  const next = () => {
+    if (i + 1 < ids.length) { i++; draw(); scrollTo(0, 0); }
+    else { toast(sessN ? `세션 종료 · ${sessOk}/${sessN} 정답` : "세션 종료"); location.hash = "#/"; }
+  };
+  const pick = L => {
+    if (done) return;
+    const q = byId.get(ids[i]);
+    if (!q.opts.some(o => o[0] === L)) return;
+    if (q.ans.length === 1) { sel = [L]; grade(); return; }
+    sel = sel.includes(L) ? sel.filter(x => x !== L) : sel.length < q.ans.length ? [...sel, L] : sel;
+    document.querySelectorAll(".opt").forEach(b => b.classList.toggle("sel", sel.includes(b.dataset.o)));
+    const c = $("#check"); c.disabled = sel.length !== q.ans.length; c.textContent = `확인 ${sel.length}/${q.ans.length}`;
+  };
+  const grade = () => {
+    const q = byId.get(ids[i]);
+    if (done || sel.length !== q.ans.length) return;
+    done = true;
+    const ok = sel.slice().sort().join() === q.ans.slice().sort().join();
+    record(q.id, ok); sessN++; if (ok) sessOk++;
+    reveal(q, ok);
+  };
+  const reveal = (q, ok) => {
+    document.querySelectorAll(".opt").forEach(b => {
+      const L = b.dataset.o; b.disabled = true; b.classList.remove("sel");
+      if (q.ans.includes(L)) b.classList.add("ok"); else if (sel.includes(L)) b.classList.add("bad");
+    });
+    if ($("#check")) { $("#check").remove(); $("#next").classList.add("primary"); }
+    $("#res").innerHTML = (ok === null ? "" : `<div class="verdict ${ok ? "ok" : "bad"}">${ok ? "정답입니다" : `오답 · 정답은 ${q.ans.join(", ")}`}</div>`)
+      + `<div class="navrow" style="margin-top:12px">${gptBtnHTML(q, ok === null ? null : sel)}<span class="kbd hint"><kbd>G</kbd> 로도 복사</span></div>`
+      + exHTML(q) + (q.url ? `<p class="kbd" style="margin:4px 0 0"><a href="${esc(q.url)}" target="_blank" rel="noopener">Examtopics 토론 보기 ↗</a> · 덤프 정답이 커뮤니티 의견과 다를 때가 있으니 애매하면 확인하세요</p>` : "");
+  };
+  const key = e => {
+    if (e.target.matches("input,select,textarea") || e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key.toUpperCase();
+    if (/^[A-F]$/.test(k) && k !== "B") pick(k);
+    else if (k === "B" && !e.shiftKey) {
+      // B는 보기 선택과 북마크가 겹치므로: 아직 안 풀었으면 보기 B 선택, 푼 뒤엔 북마크
+      if (!done) pick("B"); else $("[data-bm]").click();
+    }
+    else if (k === "G" && done && $("[data-gpt]")) $("[data-gpt]").click();
+    else if (/^[1-6]$/.test(e.key)) pick("ABCDEF"[+e.key - 1]);
+    else if (e.key === "Enter") { e.preventDefault(); if (!done && $("#check") && !$("#check").disabled) grade(); else if (done) next(); }
+    else if (e.key === "ArrowRight") next();
+    else if (e.key === "ArrowLeft" && i) { i--; draw(); }
+  };
+  document.addEventListener("keydown", key);
+  const unswipe = onSwipe(() => next(), () => { if (i) { i--; draw(); scrollTo(0, 0); } });
+  document.body.classList.add("session");
+  cleanup = () => { document.removeEventListener("keydown", key); unswipe(); document.body.classList.remove("session"); };
+  draw();
+}
+
+/* ---------- 모의고사 ---------- */
+const EXAM_KEY = "saa-exam-session";
+function exam() {
+  let saved = null; try { saved = JSON.parse(localStorage.getItem(EXAM_KEY) || "null"); } catch (e) {}
+  $("#app").innerHTML = `
+    <h1>모의고사</h1><p class="sub">실제 시험처럼 65문항 · 130분. 끝까지 정답을 보여주지 않고 제출 후 채점합니다. 합격선은 720/1000(약 72%)로 계산해요.</p>
+    <div class="card">
+      ${saved ? `<p><b>진행 중인 모의고사가 있습니다.</b> ${saved.ids.length}문항 중 ${Object.keys(saved.ans).length}문항 답함</p><div class="row" style="margin-bottom:16px"><button class="btn primary" id="resume">이어서 응시</button><button class="btn" id="discard">버리기</button></div><hr style="border:0;border-top:1px solid var(--line);margin:16px 0">` : ""}
+      <label class="f" style="margin-top:0">문항 수</label>
+      <div class="chips" id="cnt">${[20, 40, 65].map(n => `<button class="chip ${n === 65 ? "on" : ""}" data-n="${n}">${n}문항 · ${Math.round(n * 2)}분</button>`).join("")}</div>
+      <label class="f">출제 범위</label>
+      <div class="chips" id="src"><button class="chip on" data-s="all">전체 무작위</button><button class="chip" data-s="new">안 푼 문제 우선</button><button class="chip" data-s="bad">오답 우선</button></div>
+      <div class="row" style="margin-top:20px"><span class="spacer"></span><button class="btn primary" id="startEx">시작</button></div>
+    </div>`;
+  let n = 65, src = "all";
+  document.querySelectorAll("#cnt .chip").forEach(b => b.onclick = () => { n = +b.dataset.n; document.querySelectorAll("#cnt .chip").forEach(x => x.classList.toggle("on", x === b)); });
+  document.querySelectorAll("#src .chip").forEach(b => b.onclick = () => { src = b.dataset.s; document.querySelectorAll("#src .chip").forEach(x => x.classList.toggle("on", x === b)); });
+  if (saved) { $("#resume").onclick = () => runExam(saved); $("#discard").onclick = () => { localStorage.removeItem(EXAM_KEY); exam(); }; }
+  $("#startEx").onclick = () => {
+    const pri = src === "all" ? [] : shuffle(Q.filter(q => status(q.id) === src).map(q => q.id));
+    const rest = shuffle(Q.map(q => q.id).filter(id => !pri.includes(id)));
+    const ids = [...pri, ...rest].slice(0, n);
+    runExam({ ids, ans: {}, flag: [], cur: 0, end: Date.now() + n * 2 * 60000, start: Date.now() });
+  };
+}
+function runExam(E) {
+  const persist = () => { try { localStorage.setItem(EXAM_KEY, JSON.stringify(E)); } catch (e) {} };
+  persist();
+  let tick;
+  const draw = () => {
+    const q = byId.get(E.ids[E.cur]); const mine = E.ans[q.id] || [];
+    $("#app").innerHTML = `
+      <div class="sessbar" style="margin-bottom:12px"><div class="row" style="flex-wrap:nowrap"><span class="timer" id="timer"></span><span class="spacer"></span>
+        <span class="kbd">${Object.keys(E.ans).length}/${E.ids.length} 답함</span><button class="btn primary" id="submit" style="flex:none;min-height:36px;padding:6px 14px">제출</button></div></div>
+      <div class="card">
+        <div class="qhead"><span class="qno">${E.cur + 1}번</span>${q.ans.length > 1 ? `<span class="tag multi">${q.ans.length}개 선택</span>` : ""}<span class="spacer"></span>
+          <button class="btn" id="flag" style="padding:4px 10px;font-size:13px">${E.flag.includes(q.id) ? "★ 검토 표시됨" : "☆ 나중에 검토"}</button></div>
+        <div class="stem">${stemHTML(q)}</div>
+        <div class="opts">${q.opts.map(o => `<button class="opt ${mine.includes(o[0]) ? "sel" : ""}" data-o="${o[0]}"><span class="L">${o[0]}</span><span>${esc(o[1])}</span></button>`).join("")}</div>
+        <div class="navrow actbar"><button class="btn" id="prev" ${E.cur ? "" : "disabled"}>← 이전</button><button class="btn primary" id="next" ${E.cur + 1 < E.ids.length ? "" : "disabled"}>다음 →</button></div>
+      </div>
+      <h2>문항 이동</h2>
+      <div class="card"><div class="pal">${E.ids.map((id, k) => `<button data-go="${k}" class="${E.ans[id] && E.ans[id].length ? "ans" : ""} ${E.flag.includes(id) ? "flag" : ""} ${k === E.cur ? "cur" : ""}">${k + 1}</button>`).join("")}</div>
+      <p class="kbd" style="margin:10px 0 0">회색 = 답함 · 주황 밑줄 = 검토 표시</p></div>`;
+    document.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+      const L = b.dataset.o; let a = E.ans[q.id] || [];
+      if (q.ans.length === 1) a = [L];
+      else a = a.includes(L) ? a.filter(x => x !== L) : a.length < q.ans.length ? [...a, L] : [...a.slice(1), L];
+      E.ans[q.id] = a; persist(); draw();
+    });
+    $("#prev").onclick = () => { E.cur--; persist(); draw(); };
+    $("#next").onclick = () => { E.cur++; persist(); draw(); };
+    $("#flag").onclick = () => { E.flag = E.flag.includes(q.id) ? E.flag.filter(x => x !== q.id) : [...E.flag, q.id]; persist(); draw(); };
+    document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { E.cur = +b.dataset.go; persist(); draw(); scrollTo(0, 0); });
+    $("#submit").onclick = () => {
+      const left = E.ids.length - Object.values(E.ans).filter(a => a.length).length;
+      if (confirm(left ? `답하지 않은 문항이 ${left}개 있습니다. 제출할까요?` : "제출할까요?")) finish();
+    };
+    updTimer();
+  };
+  const updTimer = () => {
+    const ms = E.end - Date.now(); const t = $("#timer"); if (!t) return;
+    if (ms <= 0) { toast("시간 종료 · 자동 제출"); finish(); return; }
+    const m = Math.floor(ms / 60000), s = Math.floor(ms / 1000) % 60;
+    t.textContent = `⏱ ${m}:${String(s).padStart(2, "0")}`; t.style.color = ms < 300000 ? "var(--bad)" : "";
+  };
+  const finish = () => {
+    if (cleanup) cleanup(); cleanup = null;
+    let correct = 0;
+    const res = E.ids.map(id => {
+      const q = byId.get(id), a = (E.ans[id] || []).slice().sort().join(), ok = a === q.ans.slice().sort().join();
+      if (E.ans[id] && E.ans[id].length) record(id, ok);
+      if (ok) correct++; return { id, ok, mine: E.ans[id] || [] };
+    });
+    const score = pct(correct, E.ids.length);
+    S.exams.push({ date: Date.now(), total: E.ids.length, correct, score, sec: Math.round((Date.now() - E.start) / 1000) }); save();
+    try { localStorage.removeItem(EXAM_KEY); } catch (e) {}
+    examResult(res, score, correct);
+  };
+  const key = e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === "ArrowRight" && E.cur + 1 < E.ids.length) { E.cur++; persist(); draw(); }
+    else if (e.key === "ArrowLeft" && E.cur) { E.cur--; persist(); draw(); }
+    else if (/^[a-fA-F1-6]$/.test(e.key)) { const L = /\d/.test(e.key) ? "ABCDEF"[+e.key - 1] : e.key.toUpperCase(); const b = $(`.opt[data-o="${L}"]`); if (b) b.click(); }
+  };
+  document.addEventListener("keydown", key);
+  tick = setInterval(updTimer, 1000);
+  const unswipe = onSwipe(() => { if (E.cur + 1 < E.ids.length) { E.cur++; persist(); draw(); scrollTo(0, 0); } }, () => { if (E.cur) { E.cur--; persist(); draw(); scrollTo(0, 0); } });
+  document.body.classList.add("session");
+  cleanup = () => { clearInterval(tick); document.removeEventListener("keydown", key); unswipe(); document.body.classList.remove("session"); };
+  draw();
+}
+let examMine = {};
+function examResult(res, score, correct) {
+  examMine = Object.fromEntries(res.map(r => [r.id, r.mine]));
+  const pass = score >= 72;
+  const catStat = CATS.map(([name]) => { const r = res.filter(x => byId.get(x.id).cats.includes(name)); return { name, n: r.length, c: r.filter(x => x.ok).length }; }).filter(x => x.n);
+  $("#app").innerHTML = `
+    <h1>모의고사 결과</h1>
+    <div class="card" style="text-align:center">
+      <div class="score" style="color:${pass ? "var(--ok)" : "var(--bad)"}">${score}%</div>
+      <p style="margin:0">${correct} / ${res.length} 정답 · 환산 약 ${Math.round(100 + score * 9)}점 · <b>${pass ? "합격선 통과" : "합격선(72%) 미달"}</b></p>
+    </div>
+    <h2>영역별</h2>
+    <div class="card bars">${catStat.map(r => `<div class="r"><b>${r.name}</b><span class="t"><i style="width:${r.c / r.n * 100}%;background:var(--ok)"></i><i style="width:${(r.n - r.c) / r.n * 100}%;background:var(--bad)"></i></span><span class="kbd">${r.c}/${r.n}</span></div>`).join("")}</div>
+    <h2>문항별 결과</h2>
+    <div class="card"><div class="pal">${res.map((r, k) => `<button class="${r.ok ? "ok" : "bad"}" data-q="${r.id}">${k + 1}</button>`).join("")}</div></div>
+    <div class="row" style="margin-top:16px">
+      ${res.some(r => !r.ok) ? `<button class="btn primary" id="reviewWrong">틀린 ${res.filter(r => !r.ok).length}문제 해설 보며 다시 풀기</button>` : ""}
+      <a class="btn" href="#/exam">새 모의고사</a><a class="btn" href="#/">대시보드</a></div>`;
+  document.querySelectorAll("[data-q]").forEach(b => b.onclick = () => location.hash = "#/q/" + b.dataset.q);
+  if ($("#reviewWrong")) $("#reviewWrong").onclick = () => startPractice({ ids: res.filter(r => !r.ok).map(r => r.id) });
+}
+
+/* ---------- 단일 문제 보기 (검색/목록에서) ---------- */
+function single(id) {
+  const q = byId.get(+id); if (!q) return home();
+  $("#app").innerHTML = `<div class="row" style="margin-bottom:12px"><button class="btn" onclick="history.back()">← 뒤로</button><span class="spacer"></span><button class="btn primary" id="solve">이 문제 풀어보기</button></div>
+    <div class="card">${headHTML(q)}<div class="stem">${stemHTML(q)}</div>
+    <div class="opts">${q.opts.map(o => `<div class="opt ${q.ans.includes(o[0]) ? "ok" : ""}"><span class="L">${o[0]}</span><span>${esc(o[1])}</span></div>`).join("")}</div>
+    ${examMine[q.id] ? `<p class="kbd" style="margin:12px 0 0">모의고사에서 고른 답: <b>${examMine[q.id].length ? examMine[q.id].join(", ") : "미응답"}</b></p>` : ""}
+    <div class="navrow" style="margin-top:12px">${gptBtnHTML(q, examMine[q.id] || null)}</div>
+    ${exHTML(q)}${q.url ? `<p class="kbd"><a href="${esc(q.url)}" target="_blank" rel="noopener">Examtopics 토론 보기 ↗</a></p>` : ""}</div>`;
+  $("#solve").onclick = () => startPractice({ ids: [q.id] });
+}
+
+/* ---------- 오답·북마크 ---------- */
+function listHTML(qs, emptyMsg) {
+  if (!qs.length) return `<div class="empty">${emptyMsg}</div>`;
+  return qs.map(q => { const a = S.att[q.id]; return `<div class="item" data-q="${q.id}"><span class="no">Q${q.id}</span><span class="tx">${esc(q.q.join(" "))}</span>${a ? `<span class="kbd" style="white-space:nowrap">✕${a.w} ○${a.c}</span>` : ""}</div>`; }).join("");
+}
+function notes(tab) {
+  tab = tab || "wrong";
+  const lists = {
+    wrong: Q.filter(q => status(q.id) === "bad").sort((a, b) => S.att[b.id].w - S.att[a.id].w),
+    ever: Q.filter(q => S.att[q.id] && S.att[q.id].w).sort((a, b) => S.att[b.id].w - S.att[a.id].w),
+    bm: Q.filter(q => isBm(q.id)),
+  };
+  const cur = lists[tab];
+  $("#app").innerHTML = `<h1>오답·북마크</h1><p class="sub">틀린 횟수가 많은 순으로 정렬됩니다.</p>
+    <div class="row" style="margin-bottom:12px"><div class="chips">
+      <a class="chip ${tab === "wrong" ? "on" : ""}" href="#/notes/wrong">현재 오답<span class="n">${lists.wrong.length}</span></a>
+      <a class="chip ${tab === "ever" ? "on" : ""}" href="#/notes/ever">한 번이라도 틀림<span class="n">${lists.ever.length}</span></a>
+      <a class="chip ${tab === "bm" ? "on" : ""}" href="#/notes/bm">북마크<span class="n">${lists.bm.length}</span></a></div>
+      <span class="spacer"></span>${cur.length ? `<button class="btn primary" id="go">이 목록 풀기 (${cur.length})</button>` : ""}</div>
+    <div class="card list" style="padding:8px 16px">${listHTML(cur, tab === "bm" ? "문제 오른쪽 위 ★를 눌러 북마크하세요" : "아직 틀린 문제가 없어요")}</div>`;
+  document.querySelectorAll(".chips a").forEach(a => a.style.textDecoration = "none");
+  document.querySelectorAll("[data-q]").forEach(b => b.onclick = () => location.hash = "#/q/" + b.dataset.q);
+  if ($("#go")) $("#go").onclick = () => startPractice({ ids: cur.map(q => q.id) });
+}
+
+/* ---------- 검색 ---------- */
+let lastSearch = "";
+function search() {
+  $("#app").innerHTML = `<h1>검색</h1><p class="sub">서비스명·키워드·문제 번호로 찾기 (예: <i>Transfer Acceleration</i>, <i>RDS 프록시</i>, <i>123</i>)</p>
+    <input type="search" id="s" placeholder="검색어 입력" value="${esc(lastSearch)}" autofocus>
+    <div class="row" style="margin:12px 0"><label class="kbd"><input type="checkbox" id="inOpt" checked> 보기·해설까지 검색</label><span class="spacer"></span><span class="kbd" id="cnt"></span><button class="btn" id="go" style="display:none">결과 풀기</button></div>
+    <div class="card list" style="padding:8px 16px" id="out"></div>`;
+  let hits = [];
+  const run = () => {
+    const v = lastSearch = $("#s").value.trim();
+    if (!v) { $("#out").innerHTML = `<div class="empty">검색어를 입력하세요</div>`; $("#cnt").textContent = ""; $("#go").style.display = "none"; return; }
+    if (/^\d+$/.test(v) && byId.get(+v)) hits = [byId.get(+v)];
+    else {
+      const terms = v.toLowerCase().split(/\s+/);
+      const deep = $("#inOpt").checked;
+      hits = Q.filter(q => { const t = (q.q.join(" ") + (deep ? " " + q.opts.map(o => o[1]).join(" ") + " " + q.ex.flat().join(" ") : "")).toLowerCase(); return terms.every(x => t.includes(x)); });
+    }
+    $("#cnt").textContent = `${hits.length}개`;
+    $("#go").style.display = hits.length ? "" : "none";
+    $("#out").innerHTML = listHTML(hits.slice(0, 200), "결과가 없습니다") + (hits.length > 200 ? `<div class="empty">상위 200개만 표시</div>` : "");
+    document.querySelectorAll("[data-q]").forEach(b => b.onclick = () => location.hash = "#/q/" + b.dataset.q);
+  };
+  let t; $("#s").oninput = () => { clearTimeout(t); t = setTimeout(run, 150); };
+  $("#inOpt").onchange = run;
+  $("#go").onclick = () => startPractice({ ids: hits.map(q => q.id) });
+  run();
+}
+
+/* ---------- 핵심요약 ---------- */
+function tips() {
+  const sec = (title, items) => `<h2>${title}</h2><div class="card tips"><dl>${items.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>`;
+  $("#app").innerHTML = `<h1>핵심요약</h1><p class="sub">덤프에서 반복되는 "키워드 → 정답 서비스" 패턴. 문제 속 노란 하이라이트가 바로 이 조건들입니다.</p>
+  ${sec("문제 조건 읽는 법", [
+    ["최소한의 운영 오버헤드", "<b>관리형·서버리스</b>가 정답일 확률이 높음 (Lambda, Fargate, Aurora Serverless, DynamoDB, S3, Athena). EC2에 직접 설치·스크립트 작성 보기는 대개 오답."],
+    ["가장 비용 효율적", "스토리지 클래스 하향(S3 IA/Glacier), 스팟 인스턴스(중단 가능 작업), Savings Plans/예약 인스턴스(꾸준한 워크로드), VPC 게이트웨이 엔드포인트(S3·DynamoDB, 무료)."],
+    ["최소한의 코드 변경", "기존 엔진 그대로: MySQL/PostgreSQL → RDS·Aurora, NFS → EFS, SMB → FSx for Windows, 연결 폭주 → RDS Proxy."],
+    ["두/세 개를 선택", "보기끼리 서로 보완하는 조합을 찾기. 단독으로 완결되는 보기 2개를 고르면 함정."],
+  ])}
+  ${sec("스토리지", [
+    ["S3 스토리지 클래스", "Standard → <b>Standard-IA</b>(즉시 접근, 드물게) → <b>One Zone-IA</b>(재생성 가능 데이터) → <b>Glacier Instant/Flexible</b> → <b>Deep Archive</b>(12~48시간 복원, 최저가). 패턴 모를 땐 <b>Intelligent-Tiering</b>."],
+    ["S3 빠른 업로드", "전 세계에서 단일 버킷으로 → <b>Transfer Acceleration + 멀티파트 업로드</b>."],
+    ["S3 보호", "실수로 삭제 방지 → 버전 관리 + MFA Delete. 규정상 변경 금지 → <b>Object Lock(규정 준수 모드)</b>. 비공개 콘텐츠 배포 → CloudFront + OAC/OAI, 서명된 URL."],
+    ["EBS vs EFS vs FSx", "EBS = 단일 EC2 블록(io2만 Multi-Attach). <b>EFS</b> = 리눅스 다중 인스턴스 공유(NFS). <b>FSx for Windows</b> = SMB/AD. <b>FSx for Lustre</b> = HPC·고성능, S3 연동."],
+    ["온프레미스 연계", "<b>Storage Gateway</b>(File=NFS/SMB→S3, Volume, Tape=VTL). 대량 온라인 전송 → <b>DataSync</b>. 네트워크 없이 수십 TB+ → <b>Snowball Edge</b>. SFTP → <b>Transfer Family</b>."],
+  ])}
+  ${sec("컴퓨팅", [
+    ["EC2 구매 옵션", "중단 가능 배치 → <b>스팟</b>. 1~3년 꾸준 → 예약/Savings Plans. 라이선스(서버 단위) → <b>Dedicated Host</b>. 짧고 예측 불가 → 온디맨드."],
+    ["배치 그룹", "저지연 HPC → <b>Cluster</b>. 하드웨어 장애 격리 → <b>Spread</b>. 대규모 분산(HDFS, Cassandra) → Partition."],
+    ["Lambda 한계", "최대 15분 실행. 더 길면 ECS/Fargate·Batch. DB 연결 폭주 → <b>RDS Proxy</b>."],
+    ["컨테이너", "서버 관리 싫음 → <b>Fargate</b>. 쿠버네티스 → EKS. 온프레미스에도 → EKS Anywhere/ECS Anywhere."],
+    ["Auto Scaling", "특정 지표 유지 → <b>대상 추적</b>. 예측 가능한 시간대 → <b>예약 조정</b>. 패턴 학습 → 예측 조정."],
+  ])}
+  ${sec("데이터베이스", [
+    ["RDS 가용성 vs 성능", "<b>다중 AZ</b> = 고가용성(대기본은 읽기 불가). <b>읽기 전용 복제본</b> = 읽기 성능 분산. Aurora는 복제본이 장애 조치 대상도 됨."],
+    ["Aurora", "글로벌 저지연 읽기 + 리전 DR(RPO 1초) → <b>Aurora Global Database</b>. 예측 불가 부하 → Aurora Serverless v2."],
+    ["DynamoDB", "밀리초 키-값, 서버리스. 마이크로초 캐시 → <b>DAX</b>. 다중 리전 쓰기 → 글로벌 테이블. 변경 이벤트 → DynamoDB Streams."],
+    ["캐싱", "DB 읽기 부하·세션 저장 → <b>ElastiCache</b>(Redis: 복제·영속성·정렬 집합, Memcached: 단순·멀티스레드)."],
+    ["Redshift", "페타바이트 분석 DW. S3 데이터 직접 쿼리 → Redshift Spectrum. 단순 S3 즉석 쿼리면 <b>Athena</b>가 더 간단."],
+  ])}
+  ${sec("네트워킹", [
+    ["프라이빗 접근", "S3·DynamoDB → <b>게이트웨이 엔드포인트</b>(무료). 그 외 서비스 → 인터페이스 엔드포인트(PrivateLink). 프라이빗 서브넷의 인터넷 아웃바운드 → <b>NAT 게이트웨이</b>(AZ마다)."],
+    ["VPC 연결", "두 VPC → 피어링(전이 안 됨). 다수 VPC·온프레미스 허브 → <b>Transit Gateway</b>. 다른 계정에 서비스 노출 → PrivateLink."],
+    ["온프레미스 연결", "빠르게·저렴 → Site-to-Site VPN. 일관된 대역폭·전용선 → <b>Direct Connect</b>(+VPN 백업 또는 암호화)."],
+    ["로드 밸런서", "HTTP 경로/호스트 라우팅 → <b>ALB</b>. TCP/UDP·고정 IP·초고성능 → <b>NLB</b>. 서드파티 방화벽 어플라이언스 → GWLB."],
+    ["글로벌", "정적·동적 콘텐츠 캐싱 → <b>CloudFront</b>. TCP/UDP·고정 애니캐스트 IP·빠른 장애조치 → <b>Global Accelerator</b>. DNS 장애 조치·지연 기반 라우팅 → Route 53."],
+  ])}
+  ${sec("보안", [
+    ["암호화 키", "감사 로그 + 자동 교체 → <b>SSE-KMS(고객 관리형 키, 자동 교체)</b>. 키를 직접 보관 → SSE-C. 전용 HSM → CloudHSM."],
+    ["비밀 관리", "DB 암호 <b>자동 교체</b> → Secrets Manager. 단순 설정값 → SSM Parameter Store."],
+    ["다중 계정", "계정 전체 권한 상한 → <b>Organizations SCP</b>. 계정 간 접근 → IAM 역할 위임. 중앙 로그인 → IAM Identity Center."],
+    ["공격 방어", "SQL 인젝션·XSS·IP/국가 차단·속도 제한 → <b>WAF</b>(ALB, CloudFront, API Gateway에 연결). DDoS → <b>Shield Advanced</b>. 위협 탐지 → GuardDuty. S3 개인정보 탐지 → <b>Macie</b>."],
+    ["감사·규정", "API 호출 기록 → <b>CloudTrail</b>. 리소스 설정 규칙 준수 → <b>AWS Config</b>. 지표·알람 → CloudWatch."],
+  ])}
+  ${sec("애플리케이션 통합", [
+    ["디커플링", "작업 큐·버퍼링 → <b>SQS</b>(순서·중복 제거 → FIFO). 팬아웃 → <b>SNS + SQS</b>. 이벤트 라우팅·SaaS 연동·스케줄 → EventBridge."],
+    ["스트리밍", "실시간 수집 + 다중 소비자 → <b>Kinesis Data Streams</b>. S3/Redshift로 적재만 → <b>Kinesis Data Firehose</b>(서버리스)."],
+    ["워크플로", "여러 Lambda 단계 조율·재시도 → <b>Step Functions</b>. REST API + 인증·스로틀링 → API Gateway."],
+  ])}
+  ${sec("마이그레이션·DR", [
+    ["DB 이전", "동종 엔진 최소 다운타임 → <b>DMS(CDC 지속 복제)</b>. 이종 엔진 → <b>SCT + DMS</b>."],
+    ["서버 이전", "리프트 앤 시프트 → Application Migration Service(MGN)."],
+    ["DR 전략 (비용↑ RTO↓)", "백업·복원 → 파일럿 라이트 → 웜 스탠바이 → 멀티 사이트 액티브-액티브."],
+  ])}`;
+}
+
+route();
+</script>
+</body>
+</html>
